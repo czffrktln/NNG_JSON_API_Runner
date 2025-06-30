@@ -1,10 +1,6 @@
-const express = require('express');
-const app = express();
-const port = 3000;
+import app from './backend/dispatcher.js'
 
-app.get('/', (req, resp) => {
-  resp.sendFile(__dirname + '/frontend/index.html')
-})
+const port = 3000;
 
 app.listen(port, () => {
   console.log('Server is running on port ' + port);
