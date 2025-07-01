@@ -1,0 +1,48 @@
+body {
+  display: flex;
+  justify-content: center;
+}
+
+body.light {
+  background-color: beige;
+  color: black;
+}
+
+body.dark {
+  background-color: rgb(84, 84, 84);
+  color: white;
+}
+
+#page-content {
+  width: 600px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+textarea {
+  width: 400px;
+  height: 200px;
+}
+
+#button-area {
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.button-row {
+  width: 400px;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.right-align {
+  justify-content: flex-end;
+}
+
+button {
+  cursor: pointer;
+  padding: 0.25em 0.5em;
+}
