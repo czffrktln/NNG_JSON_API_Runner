@@ -46,7 +46,7 @@ router.post('/math', (req, res) => {
  
   const result = {};
   
-  const fibonacciInput = input.find(obj => obj.method === "getFibonacci")
+  const fibonacciInput = input.find(obj => obj.method === 'getFibonacci')
   if (!fibonacciInput) {
     log('Invalid method', logTypes.ERROR)
     return res.status(404).json({ error: 'Invalid method.' });
@@ -54,7 +54,7 @@ router.post('/math', (req, res) => {
 
   const { params, method: fibonacciMethod } = fibonacciInput;
 
-  if (!"number" in params || isNaN(params.number)) {
+  if (!'number' in params || isNaN(params.number)) {
     log('Missing or invalid parameter', logTypes.ERROR)
     return res.status(400).json({ error: 'Missing or invalid parameter.' }); 
   }
@@ -64,7 +64,7 @@ router.post('/math', (req, res) => {
   result[fibonacciMethod] = fibonacciNumber;
 
 
-  const matricesInput = input.find(obj => obj.method === "multiplyMatrices");
+  const matricesInput = input.find(obj => obj.method === 'multiplyMatrices');
   if (!matricesInput) {
     log('Invalid method', logTypes.ERROR)
     return res.status(404).json({ error: 'Invalid method.' });

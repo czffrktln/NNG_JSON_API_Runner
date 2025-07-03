@@ -36,10 +36,10 @@ const imageDiv = document.createElement('div');
 const image = document.createElement('img');
 
 sendButton.addEventListener('click', async () => {
-  output.textContent = "";
-  if (imageDiv) imageDiv.remove();
   const inputValue = input.value;
   const selectedApi = select.value
+  if (imageDiv) imageDiv.remove();
+  output.textContent = 'Loading...'
 
   try {
     const response = await fetch(`http://localhost:3000/${selectedApi}`, {
@@ -50,11 +50,11 @@ sendButton.addEventListener('click', async () => {
       body: JSON.stringify({input: inputValue})
       
     });
-
     if (response.ok) {
       const data = await response.json()
       const result = data.result
 
+      if (imageDiv) imageDiv.remove();
       output.textContent = JSON.stringify(result, null, 2)
 
       if ('image' in result) {
@@ -66,7 +66,6 @@ sendButton.addEventListener('click', async () => {
     } else {
       const error = await response.json()
       output.textContent = `/// Error(${response.status}): ${error.error} ///` 
-      console.log('Request failed:', response.status, error.error); 
     }
   }
   catch (err) {

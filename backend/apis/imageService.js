@@ -13,7 +13,7 @@ router.post('/image', (req, res) => {
   log(`Processing request with body: ${req.body.input}`, logTypes.INFO)
   const input =  JSON.parse(req.body.input);
 
-  const getImageInput = input.find(obj => obj.method === "getImageByName");
+  const getImageInput = input.find(obj => obj.method === 'getImageByName');
   if (!getImageInput) {
     log('Invalid method', logTypes.ERROR);
     return res.status(404).json({ error: 'Invalid method.' });

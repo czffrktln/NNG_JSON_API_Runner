@@ -18,7 +18,7 @@ app.use('/', (req, res, next) => {
     input = JSON.parse(req.body.input);
   } catch (err) {
     log(`Invalid JSON input: ${req.body.input}`, logTypes.ERROR);
-    return res.status(400).json({ error: "Invalid JSON format."});
+    return res.status(400).json({ error: 'Invalid JSON format.'});
   }
 
   if (!Array.isArray(input)) {
