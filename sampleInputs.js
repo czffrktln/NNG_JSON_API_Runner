@@ -36,6 +36,13 @@
 [
   {
     "method": "getUserProfile",
+    "params": { "id": 1 }
+  }
+]
+
+[
+  {
+    "method": "getUserProfile",
     "params": { "id": 346 }
   }
 ]
