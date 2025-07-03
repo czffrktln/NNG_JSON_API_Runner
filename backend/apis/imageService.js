@@ -1,5 +1,6 @@
 import express from 'express';
-
+import { log } from '../logger.js'
+ 
 const router = express.Router();
 
 const usersWithImage = [
@@ -9,6 +10,7 @@ const usersWithImage = [
 ]
 
 router.post('/image', (req, res) => {
+  log(`Processing request with body: ${JSON.stringify(JSON.parse(req.body.input))}`, "INFO")
   const input =  JSON.parse(req.body.input);
 
   const getImageInput = input.find(obj => obj.method === "getImageByName");
