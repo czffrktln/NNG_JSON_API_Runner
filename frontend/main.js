@@ -32,6 +32,9 @@ const input = document.getElementById('input');
 const select = document.getElementById('api-select')
 const sendButton = document.getElementById('send-button');
 const output = document.getElementById('output');
+const imageDiv = document.createElement('div');
+const image = document.createElement('img');
+
 sendButton.addEventListener('click', async () => {
   const inputValue = input.value;
   const selectedApi = select.value
@@ -48,8 +51,18 @@ sendButton.addEventListener('click', async () => {
 
     if (response.ok) {
       const data = await response.json()
-      console.log(data);
-      output.textContent = JSON.stringify(data.result, null, 2)
+      const result = data.result
+      console.log(result);
+
+      if (imageDiv) imageDiv.remove();
+      output.textContent = JSON.stringify(result, null, 2)
+      
+      if ('image' in result) {
+        image.src = `./avatars/${result.image}`;
+        imageDiv.appendChild(image);
+        output.after(imageDiv)
+      }
+      
     } else {
       const error = await response.json()
       console.log('Request failed:', response.status, error.error); 

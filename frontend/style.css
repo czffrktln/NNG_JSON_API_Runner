@@ -20,11 +20,6 @@ body.dark {
   align-items: center;
 }
 
-/* textarea {
-  width: 400px;
-  height: 200px;
-} */
-
 select {
   padding: 0.25em 0.5em;
 }
@@ -49,4 +44,8 @@ select {
 button {
   cursor: pointer;
   padding: 0.25em 0.5em;
+}
+
+img {
+  width: 100px;
 }
