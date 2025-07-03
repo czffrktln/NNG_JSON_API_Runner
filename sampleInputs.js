@@ -1,0 +1,48 @@
+[
+  {
+    "method": "getFibonacci",
+    "params": {"number": 4}
+  },
+  {
+    "method": "multiplyMatrices",
+    "params": { "A": [[1, 2],[3, 4]], "B": [[5, 6],[7, 8]]}
+  }
+]
+
+[
+  {
+    "method": "getFibonacci",
+    "params": "kiskutya"
+  },
+  {
+    "method": "multiplyMatrices",
+    "params": { "A": [[1, 2],[3, 4]], "B": [[5, 6],[7, 8]]}
+  }
+]
+
+[
+  {
+    "method": "getFibonacci",
+    "params": {"kiskutya"}
+  },
+  {
+    "method": "multiplyMatrices",
+    "params": { "A": [[1, 2],[3, 4]], "B": [[5, 6],[7, 8]]}
+  }
+]
+
+// dispatcher 13. sor , nem tudja parseolni
+
+[
+  {
+    "method": "getUserProfile",
+    "params": { "id": 346 }
+  }
+]
+
+[
+  {
+    "method": "getImageByName",
+    "params": { "name": "Olive" }
+  }
+]

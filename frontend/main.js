@@ -27,3 +27,35 @@ alignToggleButton.addEventListener('click', () => {
   })
   alignToggleButton.textContent = isRight ? 'Left' : 'Right'
 });
+
+const input = document.getElementById('input');
+const select = document.getElementById('api-select')
+const sendButton = document.getElementById('send-button');
+const output = document.getElementById('output');
+sendButton.addEventListener('click', async () => {
+  const inputValue = input.value;
+  const selectedApi = select.value
+
+  try {
+    const response = await fetch(`http://localhost:3000/${selectedApi}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({input: inputValue})
+      
+    });
+
+    if (response.ok) {
+      const data = await response.json()
+      console.log(data);
+      output.textContent = JSON.stringify(data.result, null, 2)
+    } else {
+      const error = await response.json()
+      console.log('Request failed:', response.status, error.error); 
+    }
+  }
+  catch (err) {
+    console.error(err);
+  }
+});

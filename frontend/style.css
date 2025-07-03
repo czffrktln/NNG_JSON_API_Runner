@@ -20,9 +20,13 @@ body.dark {
   align-items: center;
 }
 
-textarea {
+/* textarea {
   width: 400px;
   height: 200px;
+} */
+
+select {
+  padding: 0.25em 0.5em;
 }
 
 #button-area {

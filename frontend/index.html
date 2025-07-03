@@ -8,8 +8,13 @@
 </head>
 <body>
   <div id="page-content">
-    <textarea></textarea>
-    <select></select>
+    <textarea id="input" rows="20" cols="50"></textarea>
+    <label>Choose an API</label>
+    <select id="api-select">
+      <option value="image">Image service</option>
+      <option value="user">User service</option>
+      <option value="math">Math service</option>
+    </select>
     <div id="button-area">
         <h3>Theme: </h3>
         <div class="button-row">
@@ -20,8 +25,8 @@
           <button id="align-toggle"></button>
         </div>
     </div>
-    <button>RUN</button>
-    <pre>
+    <button id="send-button">RUN</button>
+    <pre id="output">
       Lorem ipsum dolor sit amet consectetur adipisicing elit. 
       Quod, provident hic dignissimos reiciendis repellat at neque 
       corporis aliquid explicabo beatae cum? Voluptate perspiciatis 
