@@ -1,4 +1,5 @@
 import express from 'express';
+import { log, logTypes } from '../logger.js';
 
 const router = express.Router();
 
@@ -9,20 +10,28 @@ const users = [
 ]
 
 router.post('/user', (req, res) => {
+  log(`Processing request with body: ${req.body.input}`, logTypes.INFO)
   const input =  JSON.parse(req.body.input);
-  const userInput = input.find(obj => obj.method === "getUserProfile");
-  const userParams = userInput.params;
+  const userProfileInput = input.find(obj => obj.method === "getUserProfile");
+  if (!userProfileInput) {
+    log('Invalid method', logTypes.ERROR)
+    return res.status(404).json({ error: 'Invalid method.' });
+  };
   
-  if (!userInput) return res.status(404).json({ error: 'Invalid method.' });
-  if (!('id' in userParams) || typeof userParams.id !== 'number') {
+  const { params } = userProfileInput;
+  if (!('id' in params) || typeof params.id !== 'number') {
+    log('Missing or invalid parameter.', logTypes.ERROR)
     return res.status(400).json({ error: 'Missing or invalid parameter.' }); 
   }
-  const id = userParams.id;
-  const userProfile = users.find(user => user.id === id)
-  if (!userProfile) return res.status(404).json({ error: 'User not found'})
   
-  res.status(200).json({result: userProfile})
+  const userProfile = users.find(user => user.id === params.id)
+  if (!userProfile) {
+    log('User not found', logTypes.ERROR)
+    return res.status(404).json({ error: 'User not found'})
+  }
 
+  log(JSON.stringify(userProfile), logTypes.RESPONSE)
+  res.status(200).json({result: userProfile})
 });
 
 export default router;

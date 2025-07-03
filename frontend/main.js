@@ -36,6 +36,7 @@ const imageDiv = document.createElement('div');
 const image = document.createElement('img');
 
 sendButton.addEventListener('click', async () => {
+  output.textContent = "";
   const inputValue = input.value;
   const selectedApi = select.value
 
@@ -56,7 +57,7 @@ sendButton.addEventListener('click', async () => {
 
       if (imageDiv) imageDiv.remove();
       output.textContent = JSON.stringify(result, null, 2)
-      
+
       if ('image' in result) {
         image.src = `./avatars/${result.image}`;
         imageDiv.appendChild(image);

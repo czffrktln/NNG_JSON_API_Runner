@@ -1,4 +1,5 @@
 import express from 'express';
+import { log, logTypes } from '../logger.js';
 
 const router = express.Router();
 
@@ -34,42 +35,59 @@ const multiplyMatrices = (A, B) => {
   return result
 };
 
+const isMatrixNumeric = (matrix) => {
+  return Array.isArray(matrix) && matrix.every( row => Array.isArray(row) && row.every( item => typeof item === 'number'))
+}
+
 
 router.post('/math', (req, res) => {
-  console.log("reqbody math", JSON.parse(req.body.input));
+  log(`Processing request with body: ${req.body.input}`, logTypes.INFO)
   const input = JSON.parse(req.body.input);
  
   const result = {};
   
-  
   const fibonacciInput = input.find(obj => obj.method === "getFibonacci")
-  const fibonacciNumber = fibonacciInput.params.number
-  const fibonacciMethod = fibonacciInput.method
+  if (!fibonacciInput) {
+    log('Invalid method', logTypes.ERROR)
+    return res.status(404).json({ error: 'Invalid method.' });
+  }
 
-  if (fibonacciInput) {
-    if (fibonacciNumber && !isNaN(fibonacciNumber)) {
-      const fibo = getFibonacci(Number(fibonacciNumber))
-      console.log(fibo);
-      result[fibonacciMethod] = fibo
-    }
-  } 
+  const { params, method: fibonacciMethod } = fibonacciInput;
+
+  if (!"number" in params || isNaN(params.number)) {
+    log('Missing or invalid parameter', logTypes.ERROR)
+    return res.status(400).json({ error: 'Missing or invalid parameter.' }); 
+  }
+
+  const fibonacciNumber = getFibonacci(Number(params.number));
+
+  result[fibonacciMethod] = fibonacciNumber;
+
+
+  const matricesInput = input.find(obj => obj.method === "multiplyMatrices");
+  if (!matricesInput) {
+    log('Invalid method', logTypes.ERROR)
+    return res.status(404).json({ error: 'Invalid method.' });
+  }
   
-  const matricesInput = input.find(obj => obj.method === "multiplyMatrices")
-  const matricesMethod = matricesInput.method
-  const matricesParams = matricesInput.params;
-  // if (matricesInput && matricesParams && )
-  const matrixA = matricesInput.params.A
-  const matrixB = matricesInput.params.B
+  const { method: matricesMethod, params: matricesParams} = matricesInput
+  const { A, B } = matricesParams;
 
-  result[matricesMethod] = multiplyMatrices(matrixA, matrixB)
+  if ( !isMatrixNumeric(A) || !isMatrixNumeric(B) ) {
+    log('Missing or invalid parameter', logTypes.ERROR)
+    return res.status(400).json({ error: 'Missing or invalid parameter.' });
+  }
 
+  try {
+    const multipliedMatrices = multiplyMatrices(A, B)
+    result[matricesMethod] = multipliedMatrices
+  } catch (err) {
+    log(err.message, logTypes.ERROR)
+    return res.status(400).json({ error: err.message})
+  }
 
-
-  console.log("result", result);
-
+  log(JSON.stringify(result), logTypes.RESPONSE)
   res.status(200).json({result: result})
-  
-
 })
 
 export default router;
